@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import Navbar from './components/Navbar'
 import Hero from './components/Hero'
 import MosaicGrid from './components/MosaicGrid'
+import SplineCubes from './components/SplineCubes'
 import SlidePanel from './components/SlidePanel'
 import MatrixBuilder from './components/MatrixBuilder'
 import Footer from './components/Footer'
@@ -139,12 +140,15 @@ function App() {
 
       <Hero />
 
-      <section className="min-h-[80vh] py-20 px-4">
-        <MosaicGrid
+      <section className="min-h-[80vh] py-20 px-4 relative">
+        <SplineCubes
           flavors={FLAVORS}
           onCubeClick={handleCubeClick}
-          matrix={matrix}
+          selectedIndex={currentCubeIndex}
         />
+        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 text-sm text-gray-500">
+          Click cubes to explore flavors
+        </div>
       </section>
 
       <section className="py-20 px-4 text-center">
