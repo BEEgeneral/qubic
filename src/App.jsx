@@ -6,14 +6,14 @@ import SlidePanel from './components/SlidePanel'
 import Footer from './components/Footer'
 
 const FLAVORS = [
-  { id: 'Au', name: 'Aurum Cacao', symbol: 'Au', cacao: '40%', color: '#C9A84C',
-    fullName: 'Aurum Cacao', tono: 'Chispa Blanca',
-    ingredients: 'CACAO · Citrus Sativa · Chispa eléctrica',
-    description: 'Ralladura cítrica eléctrica estallando. Racimo de partículas amarillas. 40% cacao trenzado con cristales cítricos.' },
+  { id: 'Au', name: 'Aurum Cacao', symbol: 'Au', cacao: '85%', color: '#C9A84C',
+    fullName: 'Aurum Cacao', tono: 'Oro Puro',
+    ingredients: 'CACAO · Oro Líquido · Núcleo de cacao',
+    description: 'Hilos de cacao líquido dorado. Nodo central, elemento de origen — cacao 24K fundido suspendido en 85% oscuro.' },
   { id: 'Ct', name: 'Citrium', symbol: 'Ct', cacao: '35%', color: '#F5C542',
     fullName: 'Citrium', tono: 'Ácido Limón',
-    ingredients: 'CACAO · Yuzu · Essential oils',
-    description: 'Esencia cítrica enzimática. Fragmentos de luz líquida.' },
+    ingredients: 'CACAO · Citrus Sativa · Essential oils',
+    description: 'Ralladura cítrica enzimática. Fragmentos de luz líquida.' },
   { id: 'Gn', name: 'Gingetron', symbol: 'Gn', cacao: '40%', color: '#8B6914',
     fullName: 'Gingetron', tono: 'Doble Cara',
     ingredients: 'CACAO · Zingiber Officinale · Fibras',
@@ -22,10 +22,10 @@ const FLAVORS = [
     fullName: 'Fumum Carbon', tono: 'Humo Negro',
     ingredients: 'CACAO · Carbón ativado · Turba',
     description: 'Carbono puro. Humo denso de bosque quemado.' },
-  { id: 'Mt', name: 'Mentholium', symbol: 'Mt', cacao: '28%', color: '#A8D5BA',
-    fullName: 'Mentholium', tono: 'Cristal Helado',
-    ingredients: 'CACAO · Menta · Eucalipto',
-    description: 'Frío extremo. Cristales de mentol puro.' },
+  { id: 'Mt', name: 'Mentholium', symbol: 'Mt', cacao: '60%', color: '#A8D5BA',
+    fullName: 'Mentholium', tono: 'Hielo Glaciar',
+    ingredients: 'CACAO · Mentha Piperita · Glaciar',
+    description: 'Niebla de menta glacial congelándose. Cristales criogénicos atrapados en geoda de 60% cacao.' },
   { id: 'Dy', name: 'Duality', symbol: 'Dy', cacao: '65%', color: '#6B7B4F',
     fullName: 'Duality', tono: 'Dual Verde',
     ingredients: 'CACAO · Matcha · Sésamo',
@@ -45,8 +45,8 @@ const FLAVORS = [
 ]
 
 function App() {
-  const [selectedFlavor, setSelectedFlavor] = useState(FLAVORS[1])
-  const [currentIndex, setCurrentIndex] = useState(1)
+  const [selectedFlavor, setSelectedFlavor] = useState(FLAVORS[2])
+  const [currentIndex, setCurrentIndex] = useState(2)
   const [isSlideOpen, setIsSlideOpen] = useState(true)
 
   const handleFlavorClick = (flavor, index) => {
@@ -68,22 +68,21 @@ function App() {
   }
 
   return (
-    <div className="min-h-screen bg-[#1C1C1C] text-white font-sans">
+    <div className="min-h-screen bg-[#1C1C1C] text-white font-['Inter'] overflow-hidden">
       <Navbar />
 
-      <Hero />
+      <main className="relative z-20 flex-1 grid grid-cols-1 lg:grid-cols-12 gap-5 px-6 md:px-10 pt-4 pb-2 min-h-screen">
+        <section className="lg:col-span-4 flex flex-col justify-between space-y-3 min-h-0">
+          <Hero />
+        </section>
 
-      <section className="py-20 px-4">
-        <div className="max-w-4xl mx-auto">
-          <h2 className="text-center text-sm tracking-[0.3em] text-[#C9A84C] mb-12">
-            TABLA PERIÓDICA DEL CACAO
-          </h2>
+        <section className="lg:col-span-8 flex flex-col min-h-0 mt-20 lg:mt-0">
           <MosaicGrid
             flavors={FLAVORS}
             onFlavorClick={handleFlavorClick}
           />
-        </div>
-      </section>
+        </section>
+      </main>
 
       <Footer />
 

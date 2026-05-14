@@ -1,14 +1,14 @@
 export default function Navbar() {
   return (
-    <nav className="fixed top-0 left-0 right-0 z-40 px-6 py-4">
-      <div className="max-w-4xl mx-auto flex items-center justify-between">
-        <div className="flex items-center gap-2">
-          <span className="text-sm font-medium tracking-[0.3em] text-white/80">QUBIC</span>
-        </div>
-        <span className="text-xs text-white/40 tracking-wider hidden md:block">
-          Qubic Atelier · Est. 2026
-        </span>
+    <header className="relative z-30 flex items-center justify-between px-6 md:px-10 py-4 border-b border-white/5 backdrop-blur-sm bg-black/30">
+      <div className="flex items-baseline gap-3">
+        <span className="text-2xl tracking-tight text-[#C9A84C]" style={{ fontFamily: 'Georgia, serif' }}>Qubic</span>
+        <span className="text-[10px] tracking-[0.3em] opacity-50 uppercase">® Matrix One</span>
       </div>
-    </nav>
+      <div className="hidden md:flex items-center gap-6 text-[10px] tracking-[0.3em] uppercase">
+        <span className="opacity-60">Lote único · 750 / 750</span>
+        <span style={{ color: '#C8FF00' }}>● Drop activo</span>
+      </div>
+    </header>
   )
 }

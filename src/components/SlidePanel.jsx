@@ -33,23 +33,23 @@ export default function SlidePanel({ flavor, index, total, isOpen, onClose, onNe
             <div className="text-center mb-6">
               <span
                 className="text-6xl font-bold text-[#C9A84C] block"
-                style={{ textShadow: '0 0 40px rgba(201, 168, 76, 0.5)' }}
+                style={{ fontFamily: 'Georgia, serif', textShadow: '0 0 40px rgba(201, 168, 76, 0.5)' }}
               >
                 {flavor.symbol}
               </span>
             </div>
 
             <div className="text-center mb-6">
-              <p className="text-xs tracking-[0.3em] text-white/40 mb-2">
+              <p className="text-[10px] tracking-[0.3em] text-white/40 mb-2 uppercase">
                 Nodo {indexPadded} / {totalPadded} · {bitId}
               </p>
-              <h2 className="text-2xl font-bold text-white mb-2">{flavor.fullName}</h2>
-              <span className="text-4xl text-[#C9A84C] font-light">{flavor.cacao}</span>
+              <h2 className="text-2xl font-bold text-white mb-2" style={{ fontFamily: 'Georgia, serif' }}>{flavor.fullName}</h2>
+              <span className="text-4xl text-[#C9A84C] font-light" style={{ fontFamily: 'Georgia, serif' }}>{flavor.cacao}</span>
             </div>
 
             <div className="mb-6">
-              <p className="text-xs text-white/40 tracking-wider mb-1">INGREDIENTES</p>
-              <p className="text-sm text-white/80">{flavor.ingredients}</p>
+              <p className="text-[10px] tracking-[0.3em] text-white/40 mb-1 uppercase">Ingredientes</p>
+              <p className="text-xs text-white/80">{flavor.ingredients}</p>
             </div>
 
             <div className="mb-6 flex-1">
@@ -57,7 +57,7 @@ export default function SlidePanel({ flavor, index, total, isOpen, onClose, onNe
             </div>
 
             <div className="mb-6">
-              <p className="text-xs text-white/40 tracking-wider mb-2">TONO</p>
+              <p className="text-[10px] tracking-[0.3em] text-white/40 mb-2 uppercase">Tono</p>
               <span className="inline-block text-[#C9A84C] text-sm">
                 {flavor.tono}
               </span>
@@ -72,8 +72,8 @@ export default function SlidePanel({ flavor, index, total, isOpen, onClose, onNe
               </button>
 
               <div className="flex-1 flex justify-center">
-                <span className="text-xs tracking-[0.2em] text-white/40">
-                  {index + 1} / {total}
+                <span className="text-xs tracking-[0.2em] text-white/40 uppercase">
+                  {indexPadded} / {totalPadded}
                 </span>
               </div>
 
