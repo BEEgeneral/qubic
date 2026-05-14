@@ -14,7 +14,7 @@ export default function Footer() {
         <div className="flex justify-center mb-8">
           <button
             className="px-6 py-3 bg-off-white/5 border border-off-white/20 rounded-full text-sm text-off-white/60 hover:bg-off-white/10 hover:border-off-white/30 transition-all"
-            onClick={() => alert('Wake up the servers!')}
+            onClick={() => alert('Frontend Preview Only. Please wake servers to enable backend functionality. Wake up servers')}
           >
             Wake up servers
           </button>

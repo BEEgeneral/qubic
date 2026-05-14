@@ -104,6 +104,7 @@ export default function Hero() {
         <div className="mb-12 px-8 py-6 bg-off-white/5 border border-off-white/10 rounded-2xl backdrop-blur-sm">
           <p className="text-[10px] tracking-[0.4em] text-off-white/50 mb-4">PRÓXIMO DROP</p>
           <CountdownTimer />
+          <p className="text-[10px] tracking-[0.2em] text-off-white/30 mt-3">UTC</p>
         </div>
 
         <div className="flex flex-col items-center gap-3">
