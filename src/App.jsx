@@ -2,231 +2,99 @@ import { useState, useEffect } from 'react'
 import Navbar from './components/Navbar'
 import Hero from './components/Hero'
 import MosaicGrid from './components/MosaicGrid'
-import SplineCubes from './components/SplineCubes'
 import SlidePanel from './components/SlidePanel'
-import MatrixBuilder from './components/MatrixBuilder'
 import Footer from './components/Footer'
-import CartPanel from './components/CartPanel'
-import CheckoutSlide from './components/CheckoutSlide'
-import RegisterModal, { LoginModal } from './components/AuthModals'
 
 const FLAVORS = [
-  { id: 'Au', name: 'Aurum Cacao', color: '#C9A84C', symbol: '[Au]',
-    description: 'El oro líquido del cacao. Un sabor que awakening tus sentidos.',
-    history: 'Origins from the ancient Aztec recipe, modernized with molecular precision.',
-    ingredients: ['Cacao 85%', 'Caramelo de azafrán', 'Miel artesanal'],
-    effect: 'Explosión de núcleo líquido — efecto 24K' },
-  { id: 'Ct', name: 'Citrium', color: '#FFB347', symbol: '[Ct]',
-    description: 'Yuzu cítrico con efervescencia eléctrica.',
-    history: 'Japanese citrus meets Swiss precision.',
-    ingredients: ['Chocolate blanco', 'Yuzu fresco', 'Petazetas (CO₂)'],
-    effect: 'Efervescencia eléctrica en paladar' },
-  { id: 'Gn', name: 'Gingetron', color: '#8B4513', symbol: '[Gn]',
-    description: 'Jengibre especiado con calor progresivo.',
-    history: 'Ancient spice route meets quantum chemistry.',
-    ingredients: ['Cacao 45%', 'Zingiber Officinale', 'Canela'],
-    effect: 'Calor especiado progresivo' },
-  { id: 'Vt', name: 'Violetium', color: '#9B59B6', symbol: '[Vt]',
-    description: 'Floral y suave con retrogusto herbal.',
-    history: 'Violet fields of Grasse meet cacao science.',
-    ingredients: ['Cacao 55%', 'Viola Odorata', 'Lavanda'],
-    effect: 'Floral y suave, retrogusto herbal' },
-  { id: 'Fc', name: 'Fumum Carbon', color: '#2C3E50', symbol: '[Fc]',
-    description: 'Ahumado profundo con textura volcánica.',
-    history: 'Volcanic soils meet aged oak barrels.',
-    ingredients: ['Cacao 70%', 'Sal negra de Chipre', 'Esencia de roble ahumado'],
-    effect: 'Textura volcánica y profunda' },
-  { id: 'Mt', name: 'Mentholium', color: '#A8E6CF', symbol: '[Mt]',
-    description: 'Chocolate blanco con frío glacial.',
-    history: 'Alpine freshness meets cacao ceremony.',
-    ingredients: ['Chocolate blanco', 'Mentha Piperita', 'Cristales de mentol'],
-    effect: 'Efecto endotérmico — frío glacial' },
-  { id: 'Dy', name: 'Duality', color: '#556B2F', symbol: '[Dy]',
-    description: 'Matcha ceremonial con sésamo negro.',
-    history: 'Japanese tea ceremony meets ancient chocolate traditions.',
-    ingredients: ['Cacao 68%', 'Té Matcha', 'Sésamo negro'],
-    effect: 'Equilibrio amargo-tostado (Binary Mix)' },
-  { id: 'Vf', name: 'Vinum Fico', color: '#722F37', symbol: '[Vf]',
-    description: 'Uva fermentada con estado líquido interior.',
-    history: 'Tuscan vineyards meet molecular gastronomy.',
-    ingredients: ['Cacao 76%', 'Vitis Vinifera', 'Taninos naturales'],
-    effect: 'Estado líquido interior — uva fermentada' },
-  { id: 'Ar', name: 'Acidum Rubus', color: '#E74C3C', symbol: '[Ar]',
-    description: 'Frambuesa liofilizada con pulso de acidez.',
-    history: 'Forest fruits meet acid science.',
-    ingredients: ['Cacao 81%', 'Rubus Idaeus', 'Ácido cítrico natural'],
-    effect: 'Pulso de acidez frutal — Acid Pulse' },
+  { id: 'Au', name: 'Aurum Cacao', symbol: '[Au]', cacao: '40%', color: '#C9A84C',
+    fullName: 'Aurum Cacao', tono: 'Chispa Blanca',
+    ingredients: 'CACAO · Citrus Sativa · Chispa eléctrica',
+    description: 'Ralladura cítrica eléctrica estallando. Racimo de partículas amarillas. 40% cacao trenzado con cristales cítricos.' },
+  { id: 'Ct', name: 'Citrium', symbol: '[Ct]', cacao: '35%', color: '#F5C542',
+    fullName: 'Citrium', tono: 'Ácido Limón',
+    ingredients: 'CACAO · Yuzu · Essential oils',
+    description: 'Esencia cítrica enzimática. Fragmentos de luz líquida.' },
+  { id: 'Gn', name: 'Gingetron', symbol: '[Gn]', cacao: '72%', color: '#8B6914',
+    fullName: 'Gingetron', tono: 'Polvo Dorado',
+    ingredients: 'CACAO · Jengibre · Canela',
+    description: 'Especiado y húmedo. Raíces subterráneas de cacao.' },
+  { id: 'Fc', name: 'Fumum Carbon', symbol: '[Fc]', cacao: '85%', color: '#3D3D3D',
+    fullName: 'Fumum Carbon', tono: 'Humo Negro',
+    ingredients: 'CACAO · Carbón ativado · Turba',
+    description: 'Carbono puro. Humo denso de bosque quemado.' },
+  { id: 'Mt', name: 'Mentholium', symbol: '[Mt]', cacao: '28%', color: '#A8D5BA',
+    fullName: 'Mentholium', tono: 'Cristal Helado',
+    ingredients: 'CACAO · Menta · Eucalipto',
+    description: 'Frío extremo. Cristales de mentol puro.' },
+  { id: 'Dy', name: 'Duality', symbol: '[Dy]', cacao: '65%', color: '#6B7B4F',
+    fullName: 'Duality', tono: 'Dual Verde',
+    ingredients: 'CACAO · Matcha · Sésamo',
+    description: 'Doble naturaleza. Amargo y herbáceo en equilibrio.' },
+  { id: 'Vf', name: 'Vinum Fico', symbol: '[Vf]', cacao: '78%', color: '#722F37',
+    fullName: 'Vinum Fico', tono: 'Uva Negra',
+    ingredients: 'CACAO · Uva fermentada · Tanino',
+    description: 'Vino antiguo. Racimo de uvas oscuras maduras.' },
+  { id: 'Ar', name: 'Acidum Rubus', symbol: '[Ar]', cacao: '81%', color: '#9B2335',
+    fullName: 'Acidum Rubus', tono: 'Frambuesa Ácida',
+    ingredients: 'CACAO · Frambuesa · Ácido natural',
+    description: 'Pulso de ácido frutal. Baya roja explosiva.' },
+  { id: 'Vt', name: 'Violetium', symbol: '[Vt]', cacao: '45%', color: '#7B3F7E',
+    fullName: 'Violetium', tono: 'Pétalo Violeta',
+    ingredients: 'CACAO · Violeta · Lavanda',
+    description: 'Floral profundo. Pétalos de violeta en cacao.' },
 ]
 
-const INITIAL_MATRIX = Array(9).fill(null)
-
 function App() {
-  const [selectedCube, setSelectedCube] = useState(null)
+  const [selectedFlavor, setSelectedFlavor] = useState(null)
+  const [currentIndex, setCurrentIndex] = useState(0)
   const [isSlideOpen, setIsSlideOpen] = useState(false)
-  const [isCartOpen, setIsCartOpen] = useState(false)
-  const [isCheckoutOpen, setIsCheckoutOpen] = useState(false)
-  const [isRegisterOpen, setIsRegisterOpen] = useState(false)
-  const [isLoginOpen, setIsLoginOpen] = useState(false)
-  const [cart, setCart] = useState([])
-  const [matrix, setMatrix] = useState(INITIAL_MATRIX)
-  const [showMatrixBuilder, setShowMatrixBuilder] = useState(false)
-  const [currentCubeIndex, setCurrentCubeIndex] = useState(0)
 
-  const handleCubeClick = (flavorId, index) => {
-    setSelectedCube(FLAVORS.find(f => f.id === flavorId))
-    setCurrentCubeIndex(index)
+  const handleFlavorClick = (flavor, index) => {
+    setSelectedFlavor(flavor)
+    setCurrentIndex(index)
     setIsSlideOpen(true)
   }
 
-  const handleNextCube = () => {
-    const nextIndex = (currentCubeIndex + 1) % FLAVORS.length
-    setCurrentCubeIndex(nextIndex)
-    setSelectedCube(FLAVORS[nextIndex])
+  const handleNext = () => {
+    const nextIndex = (currentIndex + 1) % FLAVORS.length
+    setCurrentIndex(nextIndex)
+    setSelectedFlavor(FLAVORS[nextIndex])
   }
 
-  const handlePrevCube = () => {
-    const prevIndex = (currentCubeIndex - 1 + FLAVORS.length) % FLAVORS.length
-    setCurrentCubeIndex(prevIndex)
-    setSelectedCube(FLAVORS[prevIndex])
-  }
-
-  const handleAddToMatrix = (flavorId) => {
-    const emptyIndex = matrix.findIndex(m => m === null)
-    if (emptyIndex !== -1) {
-      const newMatrix = [...matrix]
-      newMatrix[emptyIndex] = flavorId
-      setMatrix(newMatrix)
-    }
-  }
-
-  const handleAddMatrixToCart = () => {
-    if (matrix.every(m => m !== null)) {
-      const cartItem = {
-        id: Date.now(),
-        matrix: [...matrix],
-        name: 'Mi Matrix Personalizada',
-        price: 19.90,
-        quantity: 1
-      }
-      setCart([...cart, cartItem])
-      setMatrix(INITIAL_MATRIX)
-      setShowMatrixBuilder(false)
-      setIsCartOpen(true)
-    }
-  }
-
-  const handleUpdateQuantity = (itemId, newQty) => {
-    if (newQty < 1) {
-      setCart(cart.filter(item => item.id !== itemId))
-    } else {
-      setCart(cart.map(item =>
-        item.id === itemId ? { ...item, quantity: Math.min(newQty, 3) } : item
-      ))
-    }
-  }
-
-  const handleRemoveFromCart = (itemId) => {
-    setCart(cart.filter(item => item.id !== itemId))
+  const handlePrev = () => {
+    const prevIndex = (currentIndex - 1 + FLAVORS.length) % FLAVORS.length
+    setCurrentIndex(prevIndex)
+    setSelectedFlavor(FLAVORS[prevIndex])
   }
 
   return (
     <div className="min-h-screen bg-carbon-black text-off-white">
-      <Navbar
-        cartItemsCount={cart.reduce((sum, item) => sum + item.quantity, 0)}
-        onCartClick={() => setIsCartOpen(true)}
-        onLoginClick={() => setIsLoginOpen(true)}
-        onRegisterClick={() => setIsRegisterOpen(true)}
-      />
+      <Navbar />
 
       <Hero />
 
-      <section className="min-h-[80vh] py-20 px-4 relative">
-        <SplineCubes
-          flavors={FLAVORS}
-          onCubeClick={handleCubeClick}
-          selectedIndex={currentCubeIndex}
-        />
-        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 text-sm text-gray-500">
-          Click cubes to explore flavors
+      <section className="py-20 px-4">
+        <div className="max-w-4xl mx-auto">
+          <h2 className="text-center text-sm tracking-[0.3em] text-aurum-gold mb-12">
+            TABLA PERIÓDICA DEL CACAO
+          </h2>
+          <MosaicGrid
+            flavors={FLAVORS}
+            onFlavorClick={handleFlavorClick}
+          />
         </div>
       </section>
-
-      <section className="py-20 px-4 text-center">
-        <button
-          onClick={() => setShowMatrixBuilder(!showMatrixBuilder)}
-          className="bg-aurum-gold text-carbon-black px-8 py-4 text-lg font-semibold rounded-lg hover:scale-105 transition-transform"
-        >
-          {showMatrixBuilder ? 'Cerrar Configurador' : 'Personaliza tu Matrix'}
-        </button>
-      </section>
-
-      {showMatrixBuilder && (
-        <MatrixBuilder
-          flavors={FLAVORS}
-          matrix={matrix}
-          onCellClick={(index) => {
-            const flavor = prompt('Selecciona sabor (Au, Ct, Gn, Vt, Fc, Mt, Dy, Vf, Ar):')
-            if (flavor && FLAVORS.find(f => f.id === flavor)) {
-              const newMatrix = [...matrix]
-              newMatrix[index] = flavor
-              setMatrix(newMatrix)
-            }
-          }}
-          onConfirm={handleAddMatrixToCart}
-          onReset={() => setMatrix(INITIAL_MATRIX)}
-          isComplete={matrix.every(m => m !== null)}
-        />
-      )}
 
       <Footer />
 
       <SlidePanel
-        flavor={selectedCube}
+        flavor={selectedFlavor}
+        index={currentIndex}
+        total={FLAVORS.length}
         isOpen={isSlideOpen}
         onClose={() => setIsSlideOpen(false)}
-        onNext={handleNextCube}
-        onPrev={handlePrevCube}
-        onAddToMatrix={handleAddToMatrix}
-      />
-
-      <CartPanel
-        items={cart}
-        isOpen={isCartOpen}
-        onClose={() => setIsCartOpen(false)}
-        onUpdateQuantity={handleUpdateQuantity}
-        onRemove={handleRemoveFromCart}
-        onCheckout={() => {
-          setIsCartOpen(false)
-          setIsCheckoutOpen(true)
-        }}
-      />
-
-      <CheckoutSlide
-        items={cart}
-        isOpen={isCheckoutOpen}
-        onClose={() => setIsCheckoutOpen(false)}
-        onSuccess={() => {
-          setIsCheckoutOpen(false)
-          setCart([])
-        }}
-      />
-
-      <RegisterModal
-        isOpen={isRegisterOpen}
-        onClose={() => setIsRegisterOpen(false)}
-        onSwitchToLogin={() => {
-          setIsRegisterOpen(false)
-          setIsLoginOpen(true)
-        }}
-      />
-
-      <LoginModal
-        isOpen={isLoginOpen}
-        onClose={() => setIsLoginOpen(false)}
-        onSwitchToRegister={() => {
-          setIsLoginOpen(false)
-          setIsRegisterOpen(true)
-        }}
+        onNext={handleNext}
+        onPrev={handlePrev}
       />
     </div>
   )
